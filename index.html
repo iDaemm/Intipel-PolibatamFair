@@ -3,6 +3,194 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Struktur Organisasi | Team Elite</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
+    <style>
+        :root {
+            --accent: #6366f1;
+            --accent-2: #a855f7;
+            --bg: #0b0f1a;
+            --glass: rgba(255, 255, 255, 0.03);
+            --glass-border: rgba(255, 255, 255, 0.1);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: var(--bg);
+            background-image: radial-gradient(circle at 50% 50%, #1e293b 0%, #0b0f1a 100%);
+            color: white;
+            min-height: 100vh;
+            padding: 60px 20px;
+        }
+
+        header { text-align: center; margin-bottom: 50px; }
+        header h1 { font-size: 2.5rem; font-weight: 800; letter-spacing: -1px; }
+        header p { color: #64748b; margin-top: 5px; }
+
+        .org-container {
+            max-width: 1100px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 40px;
+            align-items: center;
+        }
+
+        /* Grouping Rows */
+        .row { display: flex; justify-content: center; gap: 25px; width: 100%; flex-wrap: wrap; }
+
+        /* Card Styling */
+        .member-card {
+            background: var(--glass);
+            backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 25px;
+            text-align: center;
+            width: 280px;
+            transition: all 0.3s ease;
+            animation: slideUp 0.8s ease forwards;
+            opacity: 0;
+        }
+
+        .member-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--accent);
+            background: rgba(255,255,255,0.06);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.5);
+        }
+
+        /* Profile Image with Ring */
+        .img-box {
+            position: relative;
+            width: 100px; height: 100px;
+            margin: 0 auto 15px;
+        }
+
+        .img-box img {
+            width: 100%; height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid var(--bg);
+        }
+
+        .img-box::before {
+            content: ''; position: absolute; inset: -3px;
+            border-radius: 50%;
+            background: linear-gradient(45deg, var(--accent), var(--accent-2));
+            z-index: -1;
+        }
+
+        .name { font-size: 1.2rem; font-weight: 700; margin-bottom: 4px; display: block; }
+        .role { 
+            font-size: 0.75rem; font-weight: 800; color: var(--accent);
+            text-transform: uppercase; letter-spacing: 1.5px;
+        }
+
+        /* Hierarchy Line (Visual Only) */
+        .connector {
+            width: 2px; height: 30px;
+            background: var(--glass-border);
+        }
+
+        /* Animations Delay */
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .card-leader { animation-delay: 0.2s; border: 1px solid rgba(99, 102, 241, 0.3); }
+        .card-co { animation-delay: 0.4s; }
+        .card-staff { animation-delay: 0.6s; }
+
+        @media (max-width: 768px) {
+            .member-card { width: 45%; min-width: 160px; padding: 15px; }
+            header h1 { font-size: 1.8rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>STRUKTUR TIM</h1>
+        <p>Kolaborasi Hebat, Hasil Luar Biasa</p>
+    </header>
+
+    <div class="org-container">
+        
+        <div class="row">
+            <div class="member-card card-leader">
+                <div class="img-box">
+                    <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=leader" alt="Leader">
+                </div>
+                <span class="name">Nama Leader</span>
+                <span class="role">Team Leader</span>
+            </div>
+        </div>
+
+        <div class="connector"></div>
+
+        <div class="row">
+            <div class="member-card card-co">
+                <div class="img-box">
+                    <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=co1" alt="Co-Leader">
+                </div>
+                <span class="name">Co-Leader 1</span>
+                <span class="role">Co-Leader</span>
+            </div>
+            <div class="member-card card-co">
+                <div class="img-box">
+                    <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=co2" alt="Co-Leader">
+                </div>
+                <span class="name">Co-Leader 2</span>
+                <span class="role">Co-Leader</span>
+            </div>
+        </div>
+
+        <div class="connector"></div>
+
+        <div class="row">
+            <div class="member-card card-staff">
+                <div class="img-box">
+                    <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=s1" alt="Sekre">
+                </div>
+                <span class="name">Sekretaris 1</span>
+                <span class="role">Secretary</span>
+            </div>
+            <div class="member-card card-staff">
+                <div class="img-box">
+                    <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=s2" alt="Sekre">
+                </div>
+                <span class="name">Sekretaris 2</span>
+                <span class="role">Secretary</span>
+            </div>
+            <div class="member-card card-staff">
+                <div class="img-box">
+                    <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=b1" alt="Bend">
+                </div>
+                <span class="name">Bendahara 1</span>
+                <span class="role">Treasurer</span>
+            </div>
+            <div class="member-card card-staff">
+                <div class="img-box">
+                    <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=b2" alt="Bend">
+                </div>
+                <span class="name">Bendahara 2</span>
+                <span class="role">Treasurer</span>
+            </div>
+        </div>
+
+    </div>
+
+</body>
+</html><!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Our Creative Team | [Nama Tim]</title>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
@@ -259,3 +447,4 @@
 
 </body>
 </html>
+
