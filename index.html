@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portfolio Kreatif | [Nama Anda]</title>
+    <title>Our Creative Team | [Nama Tim]</title>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
     <style>
@@ -22,148 +22,141 @@
             background-color: var(--bg);
             color: white;
             min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            overflow-x: hidden;
+            padding: 50px 20px;
         }
 
-        /* Latar Belakang Animasi Bulatan Blur */
+        /* Latar Belakang Animasi Glow */
         .bg-glow {
             position: fixed;
-            width: 400px; height: 400px;
+            top: 50%; left: 50%;
+            width: 600px; height: 600px;
             background: var(--accent);
-            filter: blur(120px);
+            filter: blur(150px);
             border-radius: 50%;
-            opacity: 0.2;
+            opacity: 0.15;
             z-index: -1;
-            animation: move 20s infinite alternate;
+            transform: translate(-50%, -50%);
         }
 
-        @keyframes move {
-            from { transform: translate(-50%, -50%); }
-            to { transform: translate(50%, 50%); }
+        header {
+            text-align: center;
+            margin-bottom: 60px;
         }
 
-        .container {
-            width: 90%;
-            max-width: 1000px;
+        header h1 {
+            font-size: 3rem;
+            font-weight: 800;
+            background: var(--accent-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        header p { color: #94a3b8; margin-top: 10px; }
+
+        /* Grid System */
+        .team-grid {
             display: grid;
-            grid-template-columns: 1fr 1.5fr;
-            gap: 20px;
-            perspective: 1000px;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
         }
 
-        /* Glassmorphism Card */
-        .glass-card {
+        /* Card Style */
+        .member-card {
             background: var(--glass);
-            backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
+            backdrop-filter: blur(10px);
             border: 1px solid var(--glass-border);
             border-radius: 24px;
-            padding: 40px;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
-        }
-
-        /* Profile Section */
-        .profile-side {
+            padding: 30px;
             text-align: center;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        .img-wrapper {
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             position: relative;
-            margin-bottom: 25px;
+            overflow: hidden;
         }
 
-        .img-wrapper::after {
-            content: '';
-            position: absolute;
-            inset: -5px;
-            background: var(--accent-gradient);
-            border-radius: 50%;
-            z-index: -1;
-            animation: rotate 4s linear infinite;
+        .member-card:hover {
+            transform: translateY(-10px);
+            background: rgba(255, 255, 255, 0.07);
+            border-color: var(--accent);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
         }
 
-        @keyframes rotate {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
+        /* Foto Profil */
+        .img-container {
+            position: relative;
+            width: 120px;
+            height: 120px;
+            margin: 0 auto 20px;
         }
 
         .profile-img {
-            width: 140px; height: 140px;
+            width: 100%;
+            height: 100%;
             border-radius: 50%;
             object-fit: cover;
-            border: 4px solid var(--bg);
+            border: 3px solid var(--glass-border);
+            padding: 5px;
         }
 
-        h1 { font-size: 1.8rem; margin-bottom: 5px; font-weight: 800; }
-        .badge {
-            background: var(--accent-gradient);
-            padding: 4px 12px;
-            border-radius: 20px;
-            font-size: 0.75rem;
+        .member-card:hover .profile-img {
+            border-color: var(--accent);
+        }
+
+        /* Nama & Jabatan */
+        .member-name {
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .member-role {
+            font-size: 0.9rem;
+            color: var(--accent);
+            font-weight: 600;
             text-transform: uppercase;
             letter-spacing: 1px;
+            margin-bottom: 15px;
+            display: block;
+        }
+
+        .member-bio {
+            font-size: 0.85rem;
+            color: #94a3b8;
+            line-height: 1.6;
             margin-bottom: 20px;
         }
 
-        /* Content Section */
-        .info-side h2 { font-size: 2.2rem; margin-bottom: 15px; }
-        .description { color: #94a3b8; line-height: 1.8; margin-bottom: 30px; }
-
-        .skills-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
-            gap: 15px;
-        }
-
-        .skill-item {
-            background: rgba(255,255,255,0.05);
-            padding: 10px;
-            border-radius: 12px;
-            text-align: center;
-            font-size: 0.85rem;
-            border: 1px solid transparent;
-            transition: 0.3s;
-        }
-
-        .skill-item:hover {
-            border-color: var(--accent);
-            background: rgba(99, 102, 241, 0.1);
-            transform: translateY(-3px);
-        }
-
-        .social-menu {
-            margin-top: 35px;
+        /* Social Icons */
+        .social-links {
             display: flex;
-            gap: 15px;
+            justify-content: center;
+            gap: 12px;
         }
 
-        .icon-btn {
-            width: 45px; height: 45px;
-            display: flex; align-items: center; justify-content: center;
-            border-radius: 12px;
-            background: var(--glass);
+        .social-links a {
+            width: 35px;
+            height: 35px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 10px;
+            background: rgba(255,255,255,0.05);
             color: white;
             text-decoration: none;
-            border: 1px solid var(--glass-border);
+            font-size: 0.9rem;
             transition: 0.3s;
         }
 
-        .icon-btn:hover {
+        .social-links a:hover {
             background: var(--accent-gradient);
             transform: scale(1.1);
         }
 
-        /* Mobile Responsive */
-        @media (max-width: 850px) {
-            .container { grid-template-columns: 1fr; }
-            .info-side { text-align: center; }
-            .social-menu { justify-content: center; }
+        /* Responsive */
+        @media (max-width: 600px) {
+            header h1 { font-size: 2rem; }
+            .team-grid { grid-template-columns: 1fr; }
         }
     </style>
 </head>
@@ -171,43 +164,97 @@
 
     <div class="bg-glow"></div>
 
-    <div class="container">
-        <div class="glass-card profile-side">
-            <div class="img-wrapper">
-                <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Felix" alt="Profil" class="profile-img">
+    <header>
+        <h1>Meet Our Team</h1>
+        <p>Orang-orang hebat di balik karya luar biasa kami.</p>
+    </header>
+
+    <div class="team-grid">
+        
+        <div class="member-card">
+            <div class="img-container">
+                <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=1" alt="Member" class="profile-img">
             </div>
-            <h1>[Nama Anda]</h1>
-            <span class="badge">Web Enthusiast</span>
-            
-            <div class="social-menu">
-                <a href="#" class="icon-btn"><i class="fab fa-github"></i></a>
-                <a href="#" class="icon-btn"><i class="fab fa-instagram"></i></a>
-                <a href="#" class="icon-btn"><i class="fab fa-linkedin"></i></a>
-                <a href="https://wa.me/62812345678" class="icon-btn"><i class="fab fa-whatsapp"></i></a>
+            <span class="member-name">Nama Anggota 1</span>
+            <span class="member-role">Team Leader</span>
+            <p class="member-bio">Bertanggung jawab atas visi tim dan koordinasi keseluruhan proyek.</p>
+            <div class="social-links">
+                <a href="#"><i class="fab fa-github"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-linkedin"></i></a>
             </div>
         </div>
 
-        <div class="glass-card info-side">
-            <h2>Tentang <span style="color: var(--accent)">Saya.</span></h2>
-            <p class="description">
-                Halo! Saya adalah seorang kreator digital yang fokus pada estetika dan fungsionalitas. 
-                Saya percaya bahwa desain yang bagus bukan hanya tentang tampilan, tapi tentang bagaimana hal itu bekerja untuk pengguna.
-            </p>
-
-            <h3 style="margin-bottom: 15px; font-size: 1.1rem;">Apa yang saya kuasai?</h3>
-            <div class="skills-grid">
-                <div class="skill-item"><i class="fab fa-html5"></i> HTML5</div>
-                <div class="skill-item"><i class="fab fa-css3-alt"></i> CSS3</div>
-                <div class="skill-item"><i class="fab fa-js"></i> JavaScript</div>
-                <div class="skill-item"><i class="fas fa-paint-brush"></i> UI/UX</div>
+        <div class="member-card">
+            <div class="img-container">
+                <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=2" alt="Member" class="profile-img">
             </div>
-
-            <div style="margin-top: 40px;">
-                <a href="mailto:emailanda@gmail.com" style="text-decoration: none; color: white; background: var(--accent-gradient); padding: 12px 30px; border-radius: 12px; font-weight: 600;">
-                    Mari Berdiskusi
-                </a>
+            <span class="member-name">Nama Anggota 2</span>
+            <span class="member-role">UI/UX Designer</span>
+            <p class="member-bio">Merancang tampilan yang cantik dan pengalaman pengguna yang intuitif.</p>
+            <div class="social-links">
+                <a href="#"><i class="fab fa-github"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-linkedin"></i></a>
             </div>
         </div>
+
+        <div class="member-card">
+            <div class="img-container">
+                <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=3" alt="Member" class="profile-img">
+            </div>
+            <span class="member-name">Nama Anggota 3</span>
+            <span class="member-role">Frontend Developer</span>
+            <p class="member-bio">Mengubah desain menjadi kode yang responsif dan interaktif.</p>
+            <div class="social-links">
+                <a href="#"><i class="fab fa-github"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-linkedin"></i></a>
+            </div>
+        </div>
+
+        <div class="member-card">
+            <div class="img-container">
+                <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=4" alt="Member" class="profile-img">
+            </div>
+            <span class="member-name">Nama Anggota 4</span>
+            <span class="member-role">Backend Developer</span>
+            <p class="member-bio">Mengelola server, database, dan logika di balik layar.</p>
+            <div class="social-links">
+                <a href="#"><i class="fab fa-github"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-linkedin"></i></a>
+            </div>
+        </div>
+
+        <div class="member-card">
+            <div class="img-container">
+                <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=5" alt="Member" class="profile-img">
+            </div>
+            <span class="member-name">Nama Anggota 5</span>
+            <span class="member-role">Content Creator</span>
+            <p class="member-bio">Menyusun konten kreatif dan strategi pemasaran untuk tim.</p>
+            <div class="social-links">
+                <a href="#"><i class="fab fa-github"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-linkedin"></i></a>
+            </div>
+        </div>
+
+        <div class="member-card">
+            <div class="img-container">
+                <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=6" alt="Member" class="profile-img">
+            </div>
+            <span class="member-name">Nama Anggota 6</span>
+            <span class="member-role">Quality Assurance</span>
+            <p class="member-bio">Memastikan semua fitur berjalan dengan sempurna tanpa bug.</p>
+            <div class="social-links">
+                <a href="#"><i class="fab fa-github"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-linkedin"></i></a>
+            </div>
+        </div>
+
     </div>
 
 </body>
