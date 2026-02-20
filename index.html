@@ -4,15 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Intipel | Polibatam Fair 2026</title>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@200;400;600;800&display=swap" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
     <style>
         :root {
-            --accent: #6366f1;
-            --accent-2: #a855f7;
-            --bg: #0b0f1a;
-            --glass: rgba(255, 255, 255, 0.03);
-            --glass-border: rgba(255, 255, 255, 0.1);
+            --primary: #6366f1;
+            --secondary: #a855f7;
+            --bg: #030712;
+            --card-bg: rgba(255, 255, 255, 0.03);
+            --border: rgba(255, 255, 255, 0.08);
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; scroll-behavior: smooth; }
@@ -20,227 +20,195 @@
         body {
             font-family: 'Plus Jakarta Sans', sans-serif;
             background-color: var(--bg);
-            background-image: radial-gradient(circle at 50% 50%, #1e293b 0%, #0b0f1a 100%);
             color: white;
             overflow-x: hidden;
-            line-height: 1.6;
         }
 
-        /* Animated Background Elements */
-        .blob {
-            position: fixed;
-            width: 600px; height: 600px;
-            background: var(--accent);
-            filter: blur(160px);
-            border-radius: 50%;
-            z-index: -1;
-            opacity: 0.1;
-            animation: move 25s infinite alternate;
+        /* --- BACKGROUND ANIMATION --- */
+        .stars {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: radial-gradient(circle at 50% 50%, #1e1b4b 0%, #030712 100%);
+            z-index: -2;
         }
 
-        @keyframes move {
-            from { transform: translate(-30%, -30%); }
-            to { transform: translate(30%, 30%); }
+        .glow {
+            position: fixed; width: 60vw; height: 60vw;
+            background: radial-gradient(circle, rgba(99, 102, 241, 0.15) 0%, transparent 70%);
+            border-radius: 50%; z-index: -1;
+            animation: pulse 15s infinite alternate;
         }
 
-        /* Hero Section */
+        @keyframes pulse {
+            0% { transform: translate(-10%, -10%) scale(1); }
+            100% { transform: translate(20%, 20%) scale(1.2); }
+        }
+
+        /* --- HERO SECTION --- */
         .hero {
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            padding: 20px;
+            height: 100vh; display: flex; flex-direction: column;
+            justify-content: center; align-items: center; text-align: center;
+            background: url('https://www.transparenttextures.com/patterns/carbon-fibre.png');
         }
 
         .hero h1 {
-            font-size: clamp(3rem, 10vw, 5rem);
-            font-weight: 800;
-            background: linear-gradient(to bottom, #fff, #6366f1);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            line-height: 1;
-            margin-bottom: 20px;
+            font-size: clamp(3.5rem, 12vw, 7rem); font-weight: 800; line-height: 0.9;
+            background: linear-gradient(180deg, #fff 0%, #6366f1 100%);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            filter: drop-shadow(0 0 30px rgba(99, 102, 241, 0.3));
         }
 
-        .hero p {
-            color: #94a3b8;
-            font-size: 1.2rem;
-            max-width: 600px;
-            margin-bottom: 30px;
+        .hero p { color: #94a3b8; font-size: 1.2rem; margin: 20px 0; letter-spacing: 2px; text-transform: uppercase; }
+
+        .btn-main {
+            padding: 15px 40px; border-radius: 50px; background: white; color: black;
+            text-decoration: none; font-weight: 700; transition: 0.3s;
+            box-shadow: 0 0 20px rgba(255,255,255,0.2);
         }
 
-        .scroll-indicator {
-            position: absolute;
-            bottom: 30px;
-            animation: bounce 2s infinite;
-            color: var(--accent);
+        .btn-main:hover { transform: scale(1.1); box-shadow: 0 0 30px var(--primary); background: var(--primary); color: white; }
+
+        /* --- ABOUT SECTION --- */
+        .about-box {
+            max-width: 1000px; margin: -100px auto 100px;
+            background: var(--card-bg); backdrop-filter: blur(30px);
+            border: 1px solid var(--border); border-radius: 40px;
+            padding: 60px; display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 40px;
+            box-shadow: 0 40px 100px rgba(0,0,0,0.5);
         }
 
-        @keyframes bounce { 0%, 20%, 50%, 80%, 100% {transform: translateY(0);} 40% {transform: translateY(-10px);} 60% {transform: translateY(-5px);} }
+        .about-box h2 { font-size: 2.5rem; margin-bottom: 20px; background: linear-gradient(to right, #fff, var(--primary)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
 
-        /* About Section */
-        .section-container {
-            max-width: 1100px;
-            margin: 0 auto;
-            padding: 100px 20px;
-        }
+        /* --- TEAM CARDS --- */
+        .section-title { text-align: center; margin-bottom: 80px; }
+        .section-title h2 { font-size: 3rem; font-weight: 800; }
+        .section-title span { color: var(--primary); }
 
-        .about-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 50px;
-            align-items: center;
-            background: var(--glass);
-            padding: 50px;
-            border-radius: 40px;
-            border: 1px solid var(--glass-border);
-            backdrop-filter: blur(10px);
-        }
+        .team-grid { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+        
+        .row-heading { text-align: center; color: var(--primary); font-weight: 800; letter-spacing: 4px; margin-bottom: 30px; text-transform: uppercase; font-size: 0.8rem;}
 
-        .about-text h2 {
-            font-size: 2.5rem;
-            margin-bottom: 20px;
-            color: var(--accent);
-        }
-
-        /* Team Grid Customization */
-        .row-label {
-            text-align: center;
-            font-size: 0.8rem;
-            color: var(--accent);
-            letter-spacing: 5px;
-            font-weight: 800;
-            margin: 40px 0 20px;
-            text-transform: uppercase;
-        }
-
-        .team-row {
-            display: flex;
-            justify-content: center;
-            gap: 25px;
-            flex-wrap: wrap;
-            margin-bottom: 40px;
-        }
+        .card-row { display: flex; justify-content: center; gap: 30px; flex-wrap: wrap; margin-bottom: 60px; }
 
         .card {
-            background: var(--glass);
-            border: 1px solid var(--glass-border);
-            border-radius: 30px;
-            padding: 35px 25px;
-            width: 280px;
-            text-align: center;
-            transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            backdrop-filter: blur(15px);
+            background: var(--card-bg); border: 1px solid var(--border);
+            padding: 40px 20px; border-radius: 35px; width: 300px;
+            text-align: center; transition: 0.5s cubic-bezier(0.2, 1, 0.2, 1);
+            position: relative; overflow: hidden;
         }
 
-        .card:hover {
-            transform: translateY(-15px);
-            border-color: var(--accent);
-            background: rgba(255,255,255,0.06);
+        .card::before {
+            content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
+            background: conic-gradient(transparent, transparent, var(--primary), transparent);
+            animation: rotate 6s linear infinite; opacity: 0; transition: 0.5s;
         }
+
+        .card:hover { transform: translateY(-20px) scale(1.05); border-color: var(--primary); }
+        .card:hover::before { opacity: 0.5; }
+
+        @keyframes rotate { 100% { transform: rotate(360deg); } }
+
+        .card-inner { position: relative; background: var(--bg); border-radius: 30px; padding: 30px 15px; height: 100%; z-index: 1; }
 
         .card img {
-            width: 120px; height: 120px;
-            border-radius: 50%;
-            margin-bottom: 20px;
-            border: 3px solid var(--accent);
-            padding: 5px;
+            width: 130px; height: 130px; border-radius: 50%; 
+            object-fit: cover; margin-bottom: 20px;
+            border: 4px solid var(--primary); box-shadow: 0 0 20px rgba(99, 102, 241, 0.4);
         }
 
-        .name { font-size: 1.2rem; font-weight: 700; display: block; }
-        .role { color: #94a3b8; font-size: 0.8rem; font-weight: 600; text-transform: uppercase; }
+        .card h3 { font-size: 1.4rem; margin-bottom: 5px; }
+        .card p { color: var(--primary); font-size: 0.75rem; font-weight: 800; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 15px;}
 
-        footer {
-            text-align: center;
-            padding: 60px 20px;
-            border-top: 1px solid var(--glass-border);
-            color: #475569;
-        }
+        .socials { display: flex; justify-content: center; gap: 15px; margin-top: 15px; }
+        .socials i { color: #4b5563; transition: 0.3s; cursor: pointer; }
+        .socials i:hover { color: white; transform: scale(1.3); }
 
-        @media (max-width: 850px) {
-            .about-grid { grid-template-columns: 1fr; text-align: center; }
+        /* --- FOOTER --- */
+        footer { padding: 100px 20px; text-align: center; border-top: 1px solid var(--border); margin-top: 100px; }
+        
+        @media (max-width: 768px) {
+            .about-box { grid-template-columns: 1fr; margin: 20px; padding: 30px; }
             .hero h1 { font-size: 3rem; }
         }
     </style>
 </head>
 <body>
 
-    <div class="blob"></div>
+    <div class="stars"></div>
+    <div class="glow"></div>
 
     <section class="hero">
-        <h1>Polibatam Fair</h1>
-        <p>Inovasi, Kreativitas, dan Kolaborasi Mahasiswa Politeknik Negeri Batam untuk Masa Depan Digital.</p>
-        <a href="#about" class="scroll-indicator"><i class="fa fa-chevron-down fa-2x"></i></a>
-    </section>
-
-    <section class="section-container" id="about">
-        <div class="about-grid">
-            <div class="about-text">
-                <h2>Tentang Kami</h2>
-                <p>Polibatam Fair adalah ajang tahunan bergengsi yang mempertemukan ide-ide brilian. Kami tim <strong>Intipel</strong> berdedikasi untuk menciptakan platform yang menghubungkan bakat mahasiswa dengan industri nyata.</p>
-                <br>
-                <p>Melalui semangat kolaborasi, kami percaya bahwa setiap detail kecil dalam organisasi tim kami adalah kunci suksesnya acara ini.</p>
-            </div>
-            <div style="background: var(--accent-gradient); height: 250px; border-radius: 25px; display: flex; align-items: center; justify-content: center;">
-                <i class="fas fa-rocket fa-5x"></i>
-            </div>
+        <p>Official Website</p>
+        <h1>POLIBATAM<br>FAIR 2026</h1>
+        <div style="margin-top: 40px;">
+            <a href="#team" class="btn-main">EXPLORE TEAM</a>
         </div>
     </section>
 
-    <section class="section-container">
-        <header style="text-align: center; margin-bottom: 60px;">
-            <h2 style="font-size: 2.5rem;">Struktur Organisasi</h2>
-            <p style="color: #94a3b8;">Sinergi Intipel Polibatam Fair</p>
-        </header>
+    <section class="about-box" id="about">
+        <div class="about-text">
+            <h2>Tentang Intipel</h2>
+            <p>Kami adalah garda terdepan dalam pengorganisasian Polibatam Fair 2026. Fokus kami adalah menciptakan ekosistem di mana teknologi bertemu dengan kreativitas tanpa batas.</p>
+        </div>
+        <div style="display: flex; flex-direction: column; justify-content: center; align-items: flex-end; color: var(--primary);">
+            <h3 style="font-size: 3rem; font-weight: 800;">100%</h3>
+            <p style="color: white;">DEDICATION</p>
+        </div>
+    </section>
 
-        <div class="row-label">Core Leadership</div>
-        <div class="team-row">
-            <div class="card">
-                <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=leader" alt="Leader">
-                <span class="name">Nama Leader</span>
-                <span class="role">Team Leader</span>
-            </div>
-            <div class="card">
-                <img src="https://i.imgur.com/b25UJ8S.jpeg" alt="Miqdam">
-                <span class="name">Miqdam Fataul Ghaza</span>
-                <span class="role">Co-Leader</span>
-            </div>
+    <section id="team">
+        <div class="section-title">
+            <h2>MEET OUR <span>EXPERTS</span></h2>
         </div>
 
-        <div class="row-label">Internal Administration</div>
-        <div class="team-row">
-            <div class="card">
-                <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=s1" alt="Sekre 1">
-                <span class="name">Nama Sekretaris</span>
-                <span class="role">Secretary 1</span>
+        <div class="team-grid">
+            <div class="row-heading">Core Leadership</div>
+            <div class="card-row">
+                <div class="card">
+                    <div class="card-inner">
+                        <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=leader" alt="Leader">
+                        <h3>Nama Leader</h3>
+                        <p>Team Leader</p>
+                        <div class="socials"><i class="fab fa-instagram"></i> <i class="fab fa-linkedin"></i></div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-inner">
+                        <img src="https://i.imgur.com/b25UJ8S.jpeg" alt="Miqdam">
+                        <h3>Miqdam Fataul Ghaza</h3>
+                        <p>Co-Leader</p>
+                        <div class="socials"><i class="fab fa-instagram"></i> <i class="fab fa-linkedin"></i></div>
+                    </div>
+                </div>
             </div>
-            <div class="card">
-                <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=s2" alt="Sekre 2">
-                <span class="name">Nama Sekretaris</span>
-                <span class="role">Secretary 2</span>
-            </div>
-            <div class="card">
-                <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=b1" alt="Bend 1">
-                <span class="name">Nama Bendahara</span>
-                <span class="role">Treasurer 1</span>
-            </div>
-            <div class="card">
-                <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=b2" alt="Bend 2">
-                <span class="name">Nama Bendahara</span>
-                <span class="role">Treasurer 2</span>
+
+            <div class="row-heading">Administration & Finance</div>
+            <div class="card-row">
+                <div class="card"><div class="card-inner">
+                    <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=s1" alt="Sekre 1">
+                    <h3>Nama Sekretaris</h3><p>Secretary 1</p>
+                    <div class="socials"><i class="fab fa-instagram"></i> <i class="fab fa-linkedin"></i></div>
+                </div></div>
+                <div class="card"><div class="card-inner">
+                    <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=s2" alt="Sekre 2">
+                    <h3>Nama Sekretaris</h3><p>Secretary 2</p>
+                    <div class="socials"><i class="fab fa-instagram"></i> <i class="fab fa-linkedin"></i></div>
+                </div></div>
+                <div class="card"><div class="card-inner">
+                    <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=b1" alt="Bend 1">
+                    <h3>Nama Bendahara</h3><p>Treasurer 1</p>
+                    <div class="socials"><i class="fab fa-instagram"></i> <i class="fab fa-linkedin"></i></div>
+                </div></div>
+                <div class="card"><div class="card-inner">
+                    <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=b2" alt="Bend 2">
+                    <h3>Nama Bendahara</h3><p>Treasurer 2</p>
+                    <div class="socials"><i class="fab fa-instagram"></i> <i class="fab fa-linkedin"></i></div>
+                </div></div>
             </div>
         </div>
     </section>
 
     <footer>
-        <p>&copy; 2026 Intipel - Polibatam Fair. All rights reserved.</p>
-        <div style="margin-top: 15px; display: flex; justify-content: center; gap: 20px;">
-            <i class="fab fa-instagram"></i>
-            <i class="fab fa-twitter"></i>
-            <i class="fas fa-globe"></i>
-        </div>
+        <p>&copy; 2026 Intipel Polibatam. Dirancang dengan penuh semangat oleh Gemini.</p>
     </footer>
 
 </body>
