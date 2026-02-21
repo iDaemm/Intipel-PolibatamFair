@@ -3,194 +3,213 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Engineering Intelligent | Dashboard</title>
-    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <title>AI_CORE | Engineering Intelligent</title>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;500;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
     <style>
         :root {
-            --cyan: #22d3ee;
+            --cyan: #00f2ff;
             --blue: #3b82f6;
-            --bg: #020617;
-            --border: rgba(34, 211, 238, 0.2);
+            --bg: #030712;
+            --panel: rgba(15, 23, 42, 0.9);
+            --border: rgba(0, 242, 255, 0.2);
+            --font-code: 'JetBrains Mono', monospace;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
+        
         body {
             font-family: 'Space Grotesk', sans-serif;
             background-color: var(--bg);
             color: white;
             min-height: 100vh;
-            background-image: radial-gradient(var(--border) 1px, transparent 1px);
-            background-size: 30px 30px;
-            display: flex; flex-direction: column; align-items: center; padding: 50px 20px;
+            overflow-x: hidden;
+            background-image: 
+                linear-gradient(var(--border) 1px, transparent 1px),
+                linear-gradient(90deg, var(--border) 1px, transparent 1px);
+            background-size: 50px 50px;
+            display: flex; flex-direction: column; align-items: center; padding: 80px 20px;
         }
 
-        h1 { font-family: 'JetBrains Mono', monospace; margin-bottom: 50px; letter-spacing: 5px; color: var(--cyan); text-align: center; }
+        /* --- HEADER --- */
+        .header-section { text-align: center; margin-bottom: 80px; position: relative; }
+        .header-section h1 { 
+            font-size: clamp(2rem, 8vw, 4rem); font-weight: 700; letter-spacing: 10px; 
+            text-transform: uppercase; color: var(--cyan); text-shadow: 0 0 20px rgba(0, 242, 255, 0.5);
+        }
+        .header-section p { font-family: var(--font-code); font-size: 0.8rem; opacity: 0.6; margin-top: 10px; }
 
-        /* ==============================
-           GRID TIM (TAMPILAN AWAL)
-           ============================== */
-        .team-container {
+        /* --- TEAM GRID --- */
+        .team-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 25px;
-            max-width: 1000px;
-            width: 100%;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 30px; max-width: 1200px; width: 100%;
         }
 
-        .member-card {
-            background: rgba(255, 255, 255, 0.02);
+        .card {
+            background: var(--panel);
             border: 1px solid var(--border);
-            padding: 30px 20px;
-            text-align: center;
-            cursor: pointer;
-            transition: 0.3s;
+            padding: 40px 20px;
             position: relative;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            clip-path: polygon(0 0, 90% 0, 100% 10%, 100% 100%, 10% 100%, 0 90%);
         }
 
-        .member-card:hover {
-            background: rgba(34, 211, 238, 0.1);
+        .card:hover {
+            transform: translateY(-10px) scale(1.02);
             border-color: var(--cyan);
-            transform: translateY(-5px);
+            box-shadow: 0 0 30px rgba(0, 242, 255, 0.2);
         }
 
-        .member-card::after {
-            content: "CLICK TO VIEW PROFILE";
-            position: absolute; bottom: 10px; left: 0; width: 100%;
-            font-size: 8px; font-family: 'JetBrains Mono'; opacity: 0; transition: 0.3s;
+        /* Scanline Animation */
+        .card::before {
+            content: ""; position: absolute; top: 0; left: 0; width: 100%; height: 2px;
+            background: var(--cyan); opacity: 0; z-index: 2;
         }
+        .card:hover::before { animation: scan 2s linear infinite; opacity: 1; }
 
-        .member-card:hover::after { opacity: 0.5; }
+        @keyframes scan { 0% { top: 0; } 100% { top: 100%; } }
 
-        .hex-frame {
-            width: 120px; height: 120px; margin: 0 auto 20px;
+        .hex-box {
+            width: 130px; height: 130px; margin: 0 auto 25px;
             clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%);
-            background: var(--cyan); padding: 3px;
+            background: var(--cyan); padding: 3px; position: relative;
         }
 
-        .hex-frame img {
+        .hex-box img {
             width: 100%; height: 100%; object-fit: cover;
             clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%);
-            background: var(--bg);
+            background: var(--bg); transition: 0.3s;
         }
 
-        .member-card h3 { font-size: 1.1rem; margin-bottom: 5px; }
-        .member-card p { font-family: 'JetBrains Mono'; font-size: 0.7rem; color: var(--cyan); text-transform: uppercase; }
+        .card:hover .hex-box img { filter: brightness(1.2) contrast(1.1); }
 
-        /* ==============================
-           MODAL PROFIL (TAMPILAN KLIK)
-           ============================== */
-        .modal-overlay {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(2, 6, 23, 0.95);
-            display: none; /* Sembunyi awal */
-            justify-content: center; align-items: center;
-            z-index: 1000; backdrop-filter: blur(10px);
+        .card h3 { font-size: 1.2rem; margin-bottom: 8px; letter-spacing: 1px; }
+        .card .role { font-family: var(--font-code); font-size: 0.75rem; color: var(--cyan); font-weight: 700; }
+
+        /* --- COLOR THEMES --- */
+        .theme-blue { --cyan: var(--blue); --border: rgba(59, 130, 246, 0.3); }
+
+        /* --- MODAL PROFIL --- */
+        .modal {
+            position: fixed; inset: 0; background: rgba(2, 6, 23, 0.98);
+            display: none; justify-content: center; align-items: center;
+            z-index: 9999; backdrop-filter: blur(15px);
         }
 
         .modal-content {
-            background: #0f172a;
-            border: 1px solid var(--cyan);
-            width: 90%; max-width: 600px;
-            padding: 40px;
-            position: relative;
-            display: flex; flex-direction: column; align-items: center;
-            text-align: center;
-            animation: zoomIn 0.3s ease;
+            background: var(--panel); border: 1px solid var(--cyan);
+            width: 95%; max-width: 800px; padding: 50px;
+            display: grid; grid-template-columns: 1fr 1.5fr; gap: 40px;
+            position: relative; animation: slideUp 0.4s ease;
         }
 
-        @keyframes zoomIn { from { transform: scale(0.8); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+        @keyframes slideUp { from { transform: translateY(50px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
 
-        .close-btn {
+        .modal-close {
             position: absolute; top: 20px; right: 20px;
-            font-size: 1.5rem; color: var(--cyan); cursor: pointer;
+            font-size: 2rem; color: var(--cyan); cursor: pointer;
         }
 
-        .modal-photo {
-            width: 150px; height: 150px;
-            clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%);
-            background: var(--cyan); padding: 4px; margin-bottom: 20px;
+        .skill-bar { width: 100%; height: 4px; background: rgba(255,255,255,0.1); margin: 15px 0 25px; }
+        .skill-fill { height: 100%; background: var(--cyan); box-shadow: 0 0 15px var(--cyan); transition: 1.5s width; }
+
+        @media (max-width: 768px) {
+            .modal-content { grid-template-columns: 1fr; padding: 30px; text-align: center; overflow-y: auto; max-height: 90vh; }
+            .modal-photo { margin: 0 auto; }
         }
-
-        .modal-photo img {
-            width: 100%; height: 100%; object-fit: cover;
-            clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%);
-        }
-
-        .modal-bio { color: #94a3b8; line-height: 1.6; margin-top: 15px; font-size: 0.9rem; }
-
-        .social-icons { margin-top: 20px; display: flex; gap: 20px; }
-        .social-icons a { color: var(--cyan); font-size: 1.2rem; transition: 0.3s; }
-        .social-icons a:hover { transform: scale(1.2); }
-
     </style>
 </head>
 <body>
 
-    <h1>ENGINEERING INTELLIGENT</h1>
+    <div class="header-section">
+        <p>> SYSTEM ACCESS GRANTED</p>
+        <h1>ENGINEERING_CORE</h1>
+        <p>REKAYASA SISTEM CERDAS - POLIBATAM FAIR 2026</p>
+    </div>
 
-    <div class="team-container">
-        <div class="member-card" onclick="openProfile('Ketua Tim', 'CHIEF EXECUTIVE', 'https://api.dicebear.com/7.x/avataaars/svg?seed=chief', 'Bertanggung jawab atas seluruh koordinasi teknis dan eksekusi proyek.')">
-            <div class="hex-frame"><img src="https://api.dicebear.com/7.x/avataaars/svg?seed=chief"></div>
-            <h3>Nama Ketua</h3>
-            <p>Chief Executive</p>
+    <div class="team-grid">
+        <div class="card" onclick="viewProfile('NAMA KETUA', 'CHIEF EXECUTIVE OFFICER', 'https://api.dicebear.com/7.x/avataaars/svg?seed=chief', 'Visi utama adalah mengintegrasikan efisiensi kerja melalui sistem otomatisasi yang presisi.', '98%')">
+            <div class="hex-box"><img src="https://api.dicebear.com/7.x/avataaars/svg?seed=chief"></div>
+            <h3>NAMA KETUA</h3>
+            <span class="role">// CHIEF EXECUTIVE</span>
         </div>
 
-        <div class="member-card" onclick="openProfile('Miqdam Fataul Ghaza', 'AI SPECIALIST', 'https://i.imgur.com/b25UJ8S.jpeg', 'Pakar integrasi AI yang memastikan sistem berjalan dengan logika cerdas dan efisien.')">
-            <div class="hex-frame"><img src="https://i.imgur.com/b25UJ8S.jpeg"></div>
-            <h3>Miqdam Fataul</h3>
-            <p>AI Specialist</p>
+        <div class="card" onclick="viewProfile('MIQDAM FATAUL GHAZA', 'LEAD INTELLIGENCE SYSTEMS', 'https://i.imgur.com/b25UJ8S.jpeg', 'Spesialis dalam pengembangan arsitektur AI dan logika sistem terpadu.', '95%')">
+            <div class="hex-box"><img src="https://i.imgur.com/b25UJ8S.jpeg"></div>
+            <h3>MIQDAM FATAUL</h3>
+            <span class="role">// AI SPECIALIST</span>
         </div>
 
-        <div class="member-card" onclick="openProfile('Nama Sekretaris', 'SYSTEM SECRETARY', 'https://api.dicebear.com/7.x/avataaars/svg?seed=sec', 'Mengelola dokumentasi digital dan administrasi sistem secara terstruktur.')">
-            <div class="hex-frame"><img src="https://api.dicebear.com/7.x/avataaars/svg?seed=sec"></div>
-            <h3>Nama Sekretaris</h3>
-            <p>System Secretary</p>
+        <div class="card" onclick="viewProfile('NAMA SEKRETARIS', 'SYSTEM SECRETARY', 'https://api.dicebear.com/7.x/avataaars/svg?seed=sec', 'Mengelola manajemen data dan dokumentasi sistem dengan alur kerja digital.', '90%')">
+            <div class="hex-box"><img src="https://api.dicebear.com/7.x/avataaars/svg?seed=sec"></div>
+            <h3>NAMA SEKRETARIS</h3>
+            <span class="role">// SECRETARY_MOD</span>
         </div>
 
-        <div class="member-card" onclick="openProfile('Nama Bendahara', 'FINANCE CONTROLLER', 'https://api.dicebear.com/7.x/avataaars/svg?seed=tr', 'Mengoptimalkan sumber daya finansial melalui kalkulasi yang presisi.')">
-            <div class="hex-frame"><img src="https://api.dicebear.com/7.x/avataaars/svg?seed=tr"></div>
-            <h3>Nama Bendahara</h3>
-            <p>Finance Controller</p>
+        <div class="card theme-blue" onclick="viewProfile('NAMA BENDAHARA', 'FINANCE CONTROLLER', 'https://api.dicebear.com/7.x/avataaars/svg?seed=tr', 'Optimasi budget dan alokasi sumber daya finansial berbasis data.', '96%', 'blue')">
+            <div class="hex-box"><img src="https://api.dicebear.com/7.x/avataaars/svg?seed=tr"></div>
+            <h3>NAMA BENDAHARA</h3>
+            <span class="role" style="color: var(--blue)">// FINANCE_MOD</span>
         </div>
     </div>
 
-    <div class="modal-overlay" id="modalOverlay" onclick="closeProfile()">
+    <div class="modal" id="profileModal" onclick="hideProfile()">
         <div class="modal-content" onclick="event.stopPropagation()">
-            <span class="close-btn" onclick="closeProfile()">&times;</span>
-            <div class="modal-photo">
-                <img id="modalImg" src="" alt="">
-            </div>
-            <h2 id="modalName" style="color: var(--cyan);"></h2>
-            <p id="modalRole" style="font-family: 'JetBrains Mono'; font-size: 0.8rem; letter-spacing: 2px;"></p>
-            <p id="modalBio" class="modal-bio"></p>
+            <span class="modal-close" onclick="hideProfile()">&times;</span>
             
-            <div class="social-icons">
-                <a href="#"><i class="fab fa-instagram"></i></a>
-                <a href="#"><i class="fab fa-linkedin"></i></a>
-                <a href="#"><i class="fas fa-envelope"></i></a>
+            <div class="modal-photo">
+                <div class="hex-box" id="mPhotoFrame" style="width: 200px; height: 200px;">
+                    <img id="mImg" src="">
+                </div>
+            </div>
+
+            <div class="modal-info">
+                <h2 id="mName" style="font-size: 2.5rem; color: var(--cyan);"></h2>
+                <p id="mRole" style="font-family: var(--font-code); color: var(--cyan); margin-bottom: 20px;"></p>
+                <p id="mBio" style="color: #94a3b8; line-height: 1.8; margin-bottom: 30px;"></p>
+                
+                <p style="font-family: var(--font-code); font-size: 0.7rem;">SYSTEM SYNC LEVEL</p>
+                <div class="skill-bar"><div class="skill-fill" id="mSkill"></div></div>
+
+                <div style="display: flex; gap: 20px;">
+                    <i class="fab fa-instagram fa-lg"></i>
+                    <i class="fab fa-linkedin fa-lg"></i>
+                    <i class="fas fa-envelope fa-lg"></i>
+                </div>
             </div>
         </div>
     </div>
 
     <script>
-        function openProfile(name, role, img, bio) {
-            document.getElementById('modalName').innerText = name;
-            document.getElementById('modalRole').innerText = "// " + role;
-            document.getElementById('modalImg').src = img;
-            document.getElementById('modalBio').innerText = bio;
-            document.getElementById('modalOverlay').style.display = 'flex';
+        function viewProfile(name, role, img, bio, skill, color = 'cyan') {
+            const modal = document.getElementById('profileModal');
+            const root = document.querySelector(':root');
+            
+            // Set Warna Berdasarkan Tema
+            if(color === 'blue') {
+                root.style.setProperty('--cyan', '#3b82f6');
+            } else {
+                root.style.setProperty('--cyan', '#00f2ff');
+            }
+
+            document.getElementById('mName').innerText = name;
+            document.getElementById('mRole').innerText = "> " + role;
+            document.getElementById('mImg').src = img;
+            document.getElementById('mBio').innerText = bio;
+            document.getElementById('mSkill').style.width = '0%';
+            
+            modal.style.display = 'flex';
+            
+            setTimeout(() => {
+                document.getElementById('mSkill').style.width = skill;
+            }, 100);
         }
 
-        function closeProfile() {
-            document.getElementById('modalOverlay').style.display = 'none';
-        }
-
-        // Close modal kalo tekan tombol Esc
-        window.onkeydown = function(event) {
-            if (event.key === "Escape") closeProfile();
+        function hideProfile() {
+            document.getElementById('profileModal').style.display = 'none';
         }
     </script>
-
 </body>
 </html>
