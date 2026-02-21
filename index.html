@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI_CORE | Team Hierarchy</title>
+    <title>AI_CORE | Team Hierarchy & Profile</title>
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;500;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
     <style>
@@ -16,6 +16,7 @@
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
+        
         body {
             font-family: 'Space Grotesk', sans-serif;
             background-color: var(--bg);
@@ -31,18 +32,23 @@
 
         .container { max-width: 1200px; width: 100%; }
 
-        /* --- LAYOUT GRID --- */
+        /* --- GRID LAYOUT --- */
         .row-leaders {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
             gap: 25px;
-            margin-bottom: 40px;
+            margin-bottom: 50px;
         }
 
         .row-admins {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
             gap: 20px;
+        }
+
+        .section-label {
+            font-family: var(--font-code); font-size: 0.7rem; color: #475569;
+            text-align: center; margin-bottom: 25px; letter-spacing: 3px;
         }
 
         /* --- CARD STYLE --- */
@@ -52,7 +58,7 @@
             padding: 30px 15px;
             text-align: center;
             cursor: pointer;
-            transition: 0.3s;
+            transition: all 0.3s ease;
             clip-path: polygon(0 0, 92% 0, 100% 10%, 100% 100%, 8% 100%, 0 90%);
         }
 
@@ -60,6 +66,7 @@
             border-color: var(--cyan);
             transform: translateY(-8px);
             background: rgba(0, 242, 255, 0.05);
+            box-shadow: 0 10px 30px rgba(0, 242, 255, 0.1);
         }
 
         .hex-frame {
@@ -76,15 +83,10 @@
 
         .card h3 { font-size: 1rem; margin-bottom: 5px; }
         .card .role { font-family: var(--font-code); font-size: 0.65rem; color: var(--cyan); letter-spacing: 1px; }
-
-        .section-label {
-            font-family: var(--font-code); font-size: 0.7rem; color: #475569;
-            text-align: center; margin-bottom: 20px; letter-spacing: 3px;
-        }
-
+        
         .theme-blue { --cyan: var(--blue); --border: rgba(59, 130, 246, 0.3); }
 
-        /* --- MODAL STYLE (YANG DIPERBAIKI) --- */
+        /* --- MODAL SYSTEM (DUA KOLOM) --- */
         .modal {
             position: fixed; inset: 0; background: rgba(2, 6, 23, 0.98);
             display: none; justify-content: center; align-items: center;
@@ -94,35 +96,82 @@
         .modal-content {
             background: #0f172a;
             border: 1px solid var(--cyan);
-            width: 90%;
-            max-width: 400px; /* Ramping supaya deskripsi memanjang ke bawah */
+            width: 95%;
+            max-width: 850px;
             padding: 40px;
+            display: grid;
+            grid-template-columns: 1fr 1.2fr;
+            gap: 40px;
+            position: relative;
+            animation: slideUp 0.3s ease;
+        }
+
+        @keyframes slideUp { from { transform: translateY(30px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+
+        .close { position: absolute; top: 15px; right: 20px; font-size: 2rem; color: var(--cyan); cursor: pointer; }
+
+        /* Sisi Kiri: Profil Utama */
+        .modal-left {
             display: flex;
             flex-direction: column;
             align-items: center;
             text-align: center;
-            gap: 20px;
-            animation: fadeIn 0.3s ease;
-            position: relative;
+            border-right: 1px solid rgba(255, 255, 255, 0.1);
+            padding-right: 20px;
         }
 
-        @keyframes fadeIn { from { opacity: 0; transform: scale(0.9); } to { opacity: 1; transform: scale(1); } }
-        
-        .close { position: absolute; top: 15px; right: 20px; font-size: 2rem; color: var(--cyan); cursor: pointer; }
+        .modal-left h2 { font-size: 1.8rem; color: var(--cyan); margin: 15px 0 5px; }
+        .modal-left .modal-role { font-family: var(--font-code); font-size: 0.75rem; color: #94a3b8; margin-bottom: 20px; }
+        .modal-left .modal-bio { font-size: 0.85rem; line-height: 1.6; color: #cbd5e1; text-align: justify; }
 
-        #mBio {
-            color: #94a3b8;
+        /* Sisi Kanan: Track Record memanjang kebawah */
+        .modal-right {
+            display: flex;
+            flex-direction: column;
+            max-height: 450px;
+        }
+
+        .modal-right h4 {
+            font-family: var(--font-code);
             font-size: 0.9rem;
-            line-height: 1.7; /* Jarak antar baris teks */
-            text-align: justify; /* Teks rapi rata kiri-kanan */
-            border-top: 1px solid rgba(0, 242, 255, 0.1);
-            padding-top: 15px;
-            width: 100%;
+            color: var(--cyan);
+            margin-bottom: 20px;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 10px;
+            letter-spacing: 2px;
         }
 
-        /* RESPONSIVE */
-        @media (max-width: 900px) {
+        .track-container {
+            overflow-y: auto;
+            padding-right: 15px;
+        }
+
+        .track-list {
+            list-style: none;
+        }
+
+        .track-item {
+            margin-bottom: 15px;
+            padding-left: 20px;
+            position: relative;
+            font-size: 0.85rem;
+            color: #94a3b8;
+            line-height: 1.5;
+        }
+
+        .track-item::before {
+            content: "▹";
+            position: absolute;
+            left: 0;
+            color: var(--cyan);
+            font-weight: bold;
+        }
+
+        /* Responsive Mobile */
+        @media (max-width: 850px) {
             .row-leaders, .row-admins { grid-template-columns: repeat(2, 1fr); }
+            .modal-content { grid-template-columns: 1fr; max-height: 90vh; overflow-y: auto; }
+            .modal-left { border-right: none; border-bottom: 1px solid rgba(255, 255, 255, 0.1); padding-bottom: 30px; padding-right: 0; }
         }
         @media (max-width: 500px) {
             .row-leaders, .row-admins { grid-template-columns: 1fr; }
@@ -138,17 +187,19 @@
     <div class="container">
         <div class="section-label">--- EXECUTIVE_CORE ---</div>
         <div class="row-leaders">
-            <div class="card" onclick="viewProfile('NAMA KETUA', 'CHIEF EXECUTIVE', 'https://api.dicebear.com/7.x/avataaars/svg?seed=chief', 'Bertanggung jawab penuh atas koordinasi seluruh departemen, pengambilan keputusan strategis, dan memastikan visi proyek tercapai tepat waktu dengan kualitas terbaik.')">
+            <div class="card" onclick="viewProfile('NAMA KETUA', 'CHIEF EXECUTIVE', 'https://api.dicebear.com/7.x/avataaars/svg?seed=chief', 'Visi utama memimpin tim dengan koordinasi strategis dan eksekusi yang presisi.', 'Ketua Pelaksana Polibatam Fair 2026 | Koordinator Umum Event Nasional | Mentor Kepemimpinan 2025 | Delegasi Mahasiswa Berprestasi')">
                 <div class="hex-frame"><img src="https://api.dicebear.com/7.x/avataaars/svg?seed=chief"></div>
                 <h3>Nama Ketua</h3>
                 <span class="role">CHIEF EXECUTIVE</span>
             </div>
-            <div class="card" onclick="viewProfile('NAMA PIC', 'PERSON IN CHARGE', 'https://api.dicebear.com/7.x/avataaars/svg?seed=pic', 'Mengawasi jalannya operasional di lapangan, menjadi penghubung utama antar divisi, serta memastikan setiap tugas diselesaikan sesuai dengan standar operasional perusahaan.')">
+            
+            <div class="card" onclick="viewProfile('NAMA PIC', 'PERSON IN CHARGE', 'https://api.dicebear.com/7.x/avataaars/svg?seed=pic', 'Mengelola operasional lapangan dan memastikan setiap divisi bekerja sesuai SOP.', 'PIC Utama Polibatam Fair | Head of Operations 2025 | Supervisor Teknis Event | Koordinator Keamanan Digital')">
                 <div class="hex-frame"><img src="https://api.dicebear.com/7.x/avataaars/svg?seed=pic"></div>
                 <h3>Nama PIC</h3>
                 <span class="role">PERSON IN CHARGE</span>
             </div>
-            <div class="card" onclick="viewProfile('MIQDAM FATAUL GHAZA', 'CO-LEADER', 'https://i.imgur.com/b25UJ8S.jpeg', 'Sebagai Co-Leader, Miqdam fokus pada integrasi sistem cerdas, arsitektur data, dan mendukung penuh operasional ketua dalam hal teknis maupun manajerial untuk stabilitas tim.')">
+
+            <div class="card" onclick="viewProfile('MIQDAM FATAUL GHAZA', 'CO-LEADER', 'https://i.imgur.com/b25UJ8S.jpeg', 'Spesialis sistem cerdas yang mendukung penuh struktur manajerial dan teknis tim.', 'Lead Developer AI System | Co-Leader Polibatam Fair | Juara 1 Kompetisi Web Nasional | Arsitek Database Event 2026')">
                 <div class="hex-frame"><img src="https://i.imgur.com/b25UJ8S.jpeg"></div>
                 <h3>Miqdam Fataul Ghaza</h3>
                 <span class="role">CO-LEADER</span>
@@ -157,22 +208,23 @@
 
         <div class="section-label">--- ADMINISTRATIVE_MOD ---</div>
         <div class="row-admins">
-            <div class="card" onclick="viewProfile('SEKRETARIS 1', 'SECRETARY I', 'https://api.dicebear.com/7.x/avataaars/svg?seed=s1', 'Mengelola seluruh administrasi surat-menyurat, pengarsipan data digital, dan memastikan alur komunikasi internal tim terdokumentasi dengan sangat rapi.')">
+            <div class="card" onclick="viewProfile('SEKRE 1', 'SECRETARY I', 'https://api.dicebear.com/7.x/avataaars/svg?seed=s1', 'Manajemen dokumentasi dan alur administrasi internal.', 'Sekretaris Inti Event | Penulis Dokumentasi Teknis | Admin Manajemen Data')">
                 <div class="hex-frame"><img src="https://api.dicebear.com/7.x/avataaars/svg?seed=s1"></div>
                 <h3>Sekretaris 1</h3>
                 <span class="role">SECRETARY I</span>
             </div>
-            <div class="card" onclick="viewProfile('SEKRETARIS 2', 'SECRETARY II', 'https://api.dicebear.com/7.x/avataaars/svg?seed=s2', 'Mendukung sekretaris utama dalam penyusunan laporan rutin, jadwal pertemuan, serta pengelolaan database anggota agar tetap sinkron dan up-to-date.')">
+            <div class="card" onclick="viewProfile('SEKRE 2', 'SECRETARY II', 'https://api.dicebear.com/7.x/avataaars/svg?seed=s2', 'Mendukung sinkronisasi data dan penjadwalan tim.', 'Sekretaris Pendamping | Staff Administrasi Terbaik | Koordinator Jadwal')">
                 <div class="hex-frame"><img src="https://api.dicebear.com/7.x/avataaars/svg?seed=s2"></div>
                 <h3>Sekretaris 2</h3>
                 <span class="role">SECRETARY II</span>
             </div>
-            <div class="card theme-blue" onclick="viewProfile('BENDAHARA 1', 'FINANCE I', 'https://api.dicebear.com/7.x/avataaars/svg?seed=b1', 'Bertanggung jawab atas pengelolaan arus kas, penyusunan anggaran biaya operasional, serta melakukan audit keuangan secara berkala agar transparansi terjaga.', 'blue')">
+            
+            <div class="card theme-blue" onclick="viewProfile('BENDAHARA 1', 'FINANCE I', 'https://api.dicebear.com/7.x/avataaars/svg?seed=b1', 'Pengelolaan arus kas dan audit anggaran proyek.', 'Bendahara Utama | Auditor Keuangan Event | Ahli Alokasi Budget', 'blue')">
                 <div class="hex-frame"><img src="https://api.dicebear.com/7.x/avataaars/svg?seed=b1"></div>
                 <h3>Bendahara 1</h3>
                 <span class="role">FINANCE I</span>
             </div>
-            <div class="card theme-blue" onclick="viewProfile('BENDAHARA 2', 'FINANCE II', 'https://api.dicebear.com/7.x/avataaars/svg?seed=b2', 'Membantu pengelolaan budget harian, verifikasi transaksi, dan menyusun laporan keuangan bulanan yang akurat untuk dilaporkan kepada jajaran pimpinan.', 'blue')">
+            <div class="card theme-blue" onclick="viewProfile('BENDAHARA 2', 'FINANCE II', 'https://api.dicebear.com/7.x/avataaars/svg?seed=b2', 'Monitoring transaksi harian dan pelaporan operasional.', 'Asisten Keuangan | Staff Finance Akurat | Verifikator Anggaran', 'blue')">
                 <div class="hex-frame"><img src="https://api.dicebear.com/7.x/avataaars/svg?seed=b2"></div>
                 <h3>Bendahara 2</h3>
                 <span class="role">FINANCE II</span>
@@ -183,25 +235,56 @@
     <div class="modal" id="pModal" onclick="this.style.display='none'">
         <div class="modal-content" onclick="event.stopPropagation()">
             <span class="close" onclick="document.getElementById('pModal').style.display='none'">&times;</span>
-            <div class="hex-frame" style="width: 140px; height: 140px;"><img id="mImg" src=""></div>
-            <div class="m-info">
-                <h2 id="mName" style="color: var(--cyan); margin-bottom: 5px;"></h2>
-                <p id="mRole" style="font-family: var(--font-code); font-size: 0.75rem; margin-bottom: 15px; letter-spacing: 2px;"></p>
-                <p id="mBio"></p>
+            
+            <div class="modal-left">
+                <div class="hex-frame" style="width: 150px; height: 150px;">
+                    <img id="mImg" src="">
+                </div>
+                <h2 id="mName"></h2>
+                <p id="mRole" class="modal-role"></p>
+                <p id="mBio" class="modal-bio"></p>
+            </div>
+
+            <div class="modal-right">
+                <h4>[ PANITIA_TRACK_RECORD ]</h4>
+                <div class="track-container">
+                    <ul class="track-list" id="mTrack">
+                        </ul>
+                </div>
             </div>
         </div>
     </div>
 
     <script>
-        function viewProfile(name, role, img, bio, color = 'cyan') {
+        function viewProfile(name, role, img, bio, trackData, color = 'cyan') {
             const root = document.querySelector(':root');
             root.style.setProperty('--cyan', color === 'blue' ? '#3b82f6' : '#00f2ff');
+            
             document.getElementById('mName').innerText = name;
             document.getElementById('mRole').innerText = "> " + role;
             document.getElementById('mImg').src = img;
             document.getElementById('mBio').innerText = bio;
+
+            // Generate Track Record List
+            const trackList = document.getElementById('mTrack');
+            trackList.innerHTML = ""; // Bersihkan list lama
+            
+            // Gunakan tanda pipe '|' sebagai pemisah di parameter onclick
+            const tracks = trackData.split('|');
+            tracks.forEach(text => {
+                const li = document.createElement('li');
+                li.className = 'track-item';
+                li.innerText = text.trim();
+                trackList.appendChild(li);
+            });
+
             document.getElementById('pModal').style.display = 'flex';
         }
+
+        // Tutup modal jika tekan tombol ESC
+        window.addEventListener('keydown', (e) => {
+            if (e.key === "Escape") document.getElementById('pModal').style.display = 'none';
+        });
     </script>
 </body>
 </html>
